@@ -1,0 +1,8 @@
+# Build output: the zip and pnpm tarballs are produced by tools/build-release.cjs.
+dist/
+
+# Dependencies: this package declares none, but a stray install must never be committed.
+node_modules/
+
+# Packed archives produced while verifying a release.
+*.tgz

@@ -1,0 +1,13 @@
+<svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="2.5" y="2.5" width="31" height="31" rx="9" fill="url(#session-hub-bg)" />
+  <path d="M10.5 13.2h11.6" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" />
+  <path d="M18.8 9.4 22.6 13.2 18.8 17" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+  <path d="M25.5 22.8H13.9" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" />
+  <path d="M17.2 19 13.4 22.8 17.2 26.6" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+  <defs>
+    <linearGradient id="session-hub-bg" x1="2.5" y1="2.5" x2="33.5" y2="33.5" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#35C6A4" />
+      <stop offset="1" stop-color="#2C8FD6" />
+    </linearGradient>
+  </defs>
+</svg>

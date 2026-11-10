@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="300" viewBox="0 0 640 300" font-family="system-ui, -apple-system, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <defs>
+    <clipPath id="card"><rect width="640" height="300" rx="10"/></clipPath>
+    <marker id="head" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+      <path d="M0 0 L7 3.5 L0 7 Z" fill="#9aa4bf"/>
+    </marker>
+  </defs>
+
+  <g clip-path="url(#card)">
+    <rect width="640" height="300" fill="#f5f6fc"/>
+
+    <text x="36" y="52" font-size="20" font-weight="600" fill="#1f2a44">会话之间直接对话</text>
+    <text x="36" y="76" font-size="13" fill="#6b7280">发消息 · 查回执 · 看进度，不经过子代理，也不写交接文件</text>
+
+    <!-- 左侧：主控会话 -->
+    <rect x="36" y="100" width="232" height="126" rx="12" fill="#ffffff" stroke="#e3e6f0"/>
+    <circle cx="54" cy="124" r="4" fill="#4f7cf7"/>
+    <text x="66" y="128" font-size="12" font-weight="600" fill="#1f2a44">主控 · amber-otter</text>
+    <rect x="52" y="140" width="196" height="42" rx="10" fill="#e8efff"/>
+    <text x="64" y="159" font-size="12" fill="#1f2a44">让 worker 查一下数据</text>
+    <text x="64" y="175" font-size="12" fill="#1f2a44">并汇总回执</text>
+    <rect x="52" y="192" width="74" height="22" rx="11" fill="#eef1f8"/>
+    <text x="62" y="207" font-size="11" fill="#4b5563">queue</text>
+    <rect x="134" y="192" width="70" height="22" rx="11" fill="#eef1f8"/>
+    <text x="144" y="207" font-size="11" fill="#4b5563">autoLink</text>
+
+    <!-- 中间：投递 -->
+    <line x1="276" y1="163" x2="356" y2="163" stroke="#9aa4bf" stroke-width="1.5" marker-end="url(#head)"/>
+    <text x="284" y="153" font-size="11" fill="#8b93a7">relay</text>
+
+    <!-- 右侧：worker 会话 -->
+    <rect x="364" y="100" width="240" height="126" rx="12" fill="#ffffff" stroke="#e3e6f0"/>
+    <circle cx="382" cy="124" r="4" fill="#2fb37a"/>
+    <text x="394" y="128" font-size="12" font-weight="600" fill="#1f2a44">worker · sunny-lynx</text>
+    <rect x="380" y="140" width="180" height="34" rx="10" fill="#eaf7ee"/>
+    <text x="392" y="161" font-size="12" fill="#1f2a44">收到，正在跑</text>
+    <rect x="380" y="192" width="86" height="22" rx="11" fill="#eef1f8"/>
+    <text x="392" y="207" font-size="11" fill="#4b5563">回执 claimed</text>
+    <rect x="474" y="192" width="110" height="22" rx="11" fill="#eef1f8"/>
+    <text x="486" y="207" font-size="11" fill="#4b5563">turn 3 · step 2</text>
+
+    <text x="36" y="268" font-size="11" fill="#9aa4bf">只读查询不会唤醒对方 · 消息带原生回执 · 支持广播与平级新会话</text>
+  </g>
+</svg>

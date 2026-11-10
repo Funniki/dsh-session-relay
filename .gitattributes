@@ -1,0 +1,10 @@
+# The installers run on the user's platform, so their line endings must not be rewritten
+# by git: a CRLF shell script fails on macOS/Linux, and a LF-only .ps1 is fine but odd.
+*.sh text eol=lf
+*.ps1 text eol=crlf
+*.js text eol=lf
+*.mjs text eol=lf
+*.cjs text eol=lf
+*.json text eol=lf
+*.yml text eol=lf
+*.md text eol=lf

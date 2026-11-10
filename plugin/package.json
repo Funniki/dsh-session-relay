@@ -1,0 +1,68 @@
+{
+  "name": "dsh-session-relay",
+  "version": "0.1.1",
+  "description": "跨会话通信中继 for DeepSeek Harness: 会话之间互相发现、发消息、查回执、看进度、开平级新会话——不经过子代理，也不写临时交接文件。Cross-session messaging, receipts, progress projection, peer spawning.",
+  "license": "MIT",
+  "type": "module",
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "session",
+    "cross-session",
+    "messaging",
+    "relay",
+    "multi-agent"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Funniki/dsh-session-relay.git"
+  },
+  "homepage": "https://github.com/Funniki/dsh-session-relay#readme",
+  "bugs": {
+    "url": "https://github.com/Funniki/dsh-session-relay/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": "^22.19.0 || >=24.0.0",
+    "dsh": ">=0.2.1-rc.5 <0.3.0"
+  },
+  "main": "lib/host.js",
+  "exports": {
+    ".": "./lib/host.js",
+    "./client": "./lib/client.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/host.js",
+    "lib/client.js",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg",
+    "docs/DETAIL.md",
+    "docs/DETAIL.zh.md",
+    "docs/preview.svg",
+    "docs/preview.zh.svg",
+    "README.md",
+    "LICENSE",
+    "install.ps1",
+    "install.sh"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-client-ui-slots"
+      ]
+    }
+  }
+}

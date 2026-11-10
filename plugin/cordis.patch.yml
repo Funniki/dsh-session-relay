@@ -1,0 +1,8 @@
+# session-relay bundle patch: one row carrying the host half and the browser half.
+- insert:
+    - id: session-relay
+      name: 'dsh-session-relay'
+      config:
+        autoLink: true
+        messageForm: relay
+        defaultMode: queue
