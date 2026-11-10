@@ -22,8 +22,7 @@ DeepSeek Harness（0.2.x）的**跨会话通信中继**：让同一进程里不�
 
 ## 状态文件
 
-`~/.dsh/session-relay/state.json`（可用 `DSH_HOME` 覆盖父目录；从 0.4.x 升级时自动读取一次
-`~/.dsh/session-hub/state.json`，不会丢连接记录）：
+`~/.dsh/session-relay/state.json`（可用 `DSH_HOME` 覆盖父目录）：
 
 ```json
 {
@@ -99,16 +98,6 @@ sh ./install.sh                                            # macOS / Linux
 | `input` | 每次进入新步骤 | 把 `text` 作为一条上下文消息重申（`once: "turn"` 每回合一次 / `"session"` 每会话一次） |
 
 匹配条件：`tool`（工具名或 `*`）+ 可选 `match`（序列化后的调用参数子串）+ 可选 `resultMatch`（after 专用，结果子串）。
-
-## 从旧版本升级
-
-本插件原名为 `dsh-session-hub`。发布时改名，包名、bundle 行、模块 id、**工具名（`hub_*` → `relay_*`）**
-全部换成 `relay`；状态目录从 `~/.dsh/session-hub/` 自动读取一次并迁移到 `~/.dsh/session-relay/`，
-已有规则里的旧工具名会自动改写，所以升级后不需要重新配置。
-旧会话里的中继卡片仍能识别（`SOURCE_LABELS` 保留旧值）。
-
-升级时**先卸载旧包再装新包**：`dsh plugin --profile desktop remove dsh-session-hub`。
-两个包同时存在会重复注册工具。
 
 ## 当前版本
 
