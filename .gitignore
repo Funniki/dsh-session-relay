@@ -6,3 +6,6 @@ node_modules/
 
 # Packed archives produced while verifying a release.
 *.tgz
+
+# A file named CON cannot be checked out on Windows: it is the console device.
+CON

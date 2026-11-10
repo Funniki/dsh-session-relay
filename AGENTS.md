@@ -20,6 +20,8 @@
   → `node verification/verify-release.mjs --local` → `node tools/build-release.cjs`
   → `node verification/install-paths.test.mjs` → 发布后
   `node verification/verify-release.mjs --version <版本> --tag latest --install`。
+- 跨宿主：`node verification/host-compat.test.mjs` 借另一版宿主的 `@deepseek-ai/dsh-tools` 校验工具 schema。
+  没装第二份宿主时它会自动跳过；升级 `engines.dsh` 的上限前必须让它跑到。
 - 全绿之前不报告完成，也不让用户去拉。
 
 ## 两个已经吃过亏的硬约束
