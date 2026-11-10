@@ -153,8 +153,6 @@ function checkFiles(manifest) {
 		'icon.svg',
 		'docs/DETAIL.md',
 		'docs/DETAIL.zh.md',
-		'docs/GUIDE.md',
-		'docs/GUIDE.zh.md',
 		'docs/preview.svg',
 		'docs/preview.zh.svg',
 		'README.md',
@@ -171,8 +169,6 @@ function checkFiles(manifest) {
 		'LICENSE',
 		'docs/DETAIL.md',
 		'docs/DETAIL.zh.md',
-		'docs/GUIDE.md',
-		'docs/GUIDE.zh.md',
 		'docs/preview.svg',
 		'docs/preview.zh.svg'
 	]) {
@@ -236,20 +232,38 @@ function checkHostHalf() {
  * exactly what this was asked to replace.
  */
 function checkShowcase() {
-	// The plugin page renders README.md and resolves relative images against the package,
-	// so the illustration only appears when the README references it — a docs/DETAIL.* file
-	// alone shows nothing. Verified on the rendered page, not assumed.
-	const readmePath = path.join(PLUGIN, 'README.md')
-	const readme = fs.existsSync(readmePath) ? fs.readFileSync(readmePath, 'utf8') : ''
-	if (/!\[[^\]]*\]\(docs\/preview[^)]*\)/.test(readme) === false) {
-		fail('README.md does not reference docs/preview*.svg — the plugin page would show no illustration')
+	// The plugin page picks its document from `locale/<lang>.json` -> `meta.detail`; a
+	// package without that key silently renders README.md instead, which is how the page
+	// once showed the whole readme. Verified against the host's localeDetail() reader.
+	const localeDir = path.join(PLUGIN, 'locale')
+	const dictionaries = fs.existsSync(localeDir) ? fs.readdirSync(localeDir).filter((file) => file.endsWith('.json')) : []
+	if (dictionaries.length === 0) fail('locale/ holds no dictionary, so the plugin page cannot find its detail document')
+	for (const dictionary of dictionaries) {
+		const file = path.join(localeDir, dictionary)
+		let meta
+		try {
+			meta = JSON.parse(fs.readFileSync(file, 'utf8')).meta
+		} catch (error) {
+			fail(`locale/${dictionary} is not valid JSON — ${error.message}`)
+			continue
+		}
+		const detail = typeof meta === 'object' && meta !== null ? meta.detail : undefined
+		if (typeof detail !== 'string' || detail.trim() === '') {
+			fail(`locale/${dictionary} does not declare meta.detail — the plugin page would fall back to README.md`)
+			continue
+		}
+		if (fs.existsSync(path.join(PLUGIN, detail)) === false) fail(`locale/${dictionary} points meta.detail at ${detail}, which does not exist`)
 	}
+	// The illustration must be referenced from the document the page actually renders.
 	for (const [detail, preview] of [
 		['docs/DETAIL.md', 'preview.svg'],
 		['docs/DETAIL.zh.md', 'preview.zh.svg']
 	]) {
 		const file = path.join(PLUGIN, detail)
-		if (fs.existsSync(file) === false) continue
+		if (fs.existsSync(file) === false) {
+			fail(`${detail} is missing`)
+			continue
+		}
 		const text = fs.readFileSync(file, 'utf8')
 		if (text.includes(`](${preview})`) === false) {
 			fail(`${detail} does not reference ${preview} — the plugin page would show no illustration`)
@@ -285,7 +299,7 @@ function checkPatch(manifest) {
  */
 function checkDocVersions(version) {
 	const expectations = [
-		['docs/GUIDE.zh.md', /版本[:：]\s*\**([0-9]+\.[0-9]+\.[0-9]+)/],
+		['README.md', /版本[:：]\s*\**([0-9]+\.[0-9]+\.[0-9]+)/],
 		['../verification/README.md', /版本[:：]\s*\**([0-9]+\.[0-9]+\.[0-9]+)/]
 	]
 	for (const [relative, pattern] of expectations) {

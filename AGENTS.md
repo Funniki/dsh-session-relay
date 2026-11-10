@@ -41,11 +41,16 @@
 
 ## 插件页展示（实测结论，别再猜）
 
-- 插件页渲染的就是 **`README.md`**，并把其中的相对图片解析到包内。宿主内置插件走的是编译进
-  asar 的 `meta.detail`，**第三方插件没有这条通道** —— 放 `docs/DETAIL.*` 不会改变页面。
-- 所以 README 是落地页，只放：一句话说明 → `docs/preview*.svg` 示意图 → 痛点。**到此为止**，
-  细节一律搬到 `docs/GUIDE*.md`（中英各一份，随包发布）。
-- README 里不写标题也行，页头已经显示包名；写了会出现同名重复。
-- 审计会拒两种情况：README 不引用 preview 图（页面没有示意图）、`docs/GUIDE*.md` 缺失。
-- 想验证页面效果，别看推断：打 tarball 装进临时 profile、起 0.2.2 的 web、用浏览器打开
-  `/plugins` 截图确认。
+- 插件页显示的正文**不是 README**，而是依次查找：`locale/<lang>.json` 里的 `meta.detail`
+  → 它指向的那个 Markdown（如 `docs/DETAIL.zh.md`）。宿主源码里就是
+  `localeDetail()`：读 `locale/${name}.json`、取 `meta.detail`、校验路径不越界。
+- **没有 `meta.detail` 就回退到 README.md** —— 这正是最初「页面把整份 README 摊开」的原因。
+  当时改 README、加 `docs/DETAIL.*` 都没用，因为缺的就是这个字段。
+- 所以：`locale/*.json` 各自声明 `meta.detail`（zh → `docs/DETAIL.zh.md`，en → `docs/DETAIL.md`），
+  DETAIL 写页面内容（示意图 + 简介），README 保持完整给 GitHub / npm。两边互不影响。
+- DETAIL 里的相对图片以 DETAIL 所在目录解析；示意图必须被 DETAIL 引用，否则页面没有图。
+- 审计强制：每个 `locale/*.json` 都要有 `meta.detail` 且目标文件存在；DETAIL 必须引用 preview。
+- 参考实现：`dsh-rewind-plugin`（README 187 行，`locale/zh.json` 里有 `meta.detail: docs/DETAIL.zh.md`，
+  DETAIL 只有一行图，页面就只显示那张图）。
+- 想验证页面效果，别看推断：打 tarball 装进临时 profile、起 0.2.2 的 web、用浏览器打开插件页，
+  并检查 `img.src` 里的 `document=` 参数指向哪个文件。
