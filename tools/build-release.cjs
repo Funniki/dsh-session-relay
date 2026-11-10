@@ -153,6 +153,8 @@ function checkFiles(manifest) {
 		'icon.svg',
 		'docs/DETAIL.md',
 		'docs/DETAIL.zh.md',
+		'docs/GUIDE.md',
+		'docs/GUIDE.zh.md',
 		'docs/preview.svg',
 		'docs/preview.zh.svg',
 		'README.md',
@@ -169,6 +171,8 @@ function checkFiles(manifest) {
 		'LICENSE',
 		'docs/DETAIL.md',
 		'docs/DETAIL.zh.md',
+		'docs/GUIDE.md',
+		'docs/GUIDE.zh.md',
 		'docs/preview.svg',
 		'docs/preview.zh.svg'
 	]) {
@@ -281,7 +285,7 @@ function checkPatch(manifest) {
  */
 function checkDocVersions(version) {
 	const expectations = [
-		['README.md', /版本[:：]\s*\**([0-9]+\.[0-9]+\.[0-9]+)/],
+		['docs/GUIDE.zh.md', /版本[:：]\s*\**([0-9]+\.[0-9]+\.[0-9]+)/],
 		['../verification/README.md', /版本[:：]\s*\**([0-9]+\.[0-9]+\.[0-9]+)/]
 	]
 	for (const [relative, pattern] of expectations) {
