@@ -4,6 +4,8 @@
 
 DeepSeek Harness（0.2.x）的**跨会话通信中继**：让同一进程里不同的会话（不是父子关系的子代理）互相发现、发消息、查回执、看进度、开平级新会话。
 
+![会话之间直接对话](docs/preview.zh.svg)
+
 > 本插件原名为 `dsh-session-hub`（0.4.1 之前）。发布时改名，包名、bundle 行、模块 id、
 > **工具名（`hub_*` → `relay_*`）**全部换成 `relay`；状态目录从 `~/.dsh/session-hub/`
 > 自动读取一次并迁移到 `~/.dsh/session-relay/`，已有规则里的旧工具名也会自动改写，

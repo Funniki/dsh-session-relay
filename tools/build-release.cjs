@@ -232,6 +232,14 @@ function checkHostHalf() {
  * exactly what this was asked to replace.
  */
 function checkShowcase() {
+	// The plugin page renders README.md and resolves relative images against the package,
+	// so the illustration only appears when the README references it — a docs/DETAIL.* file
+	// alone shows nothing. Verified on the rendered page, not assumed.
+	const readmePath = path.join(PLUGIN, 'README.md')
+	const readme = fs.existsSync(readmePath) ? fs.readFileSync(readmePath, 'utf8') : ''
+	if (/!\[[^\]]*\]\(docs\/preview[^)]*\)/.test(readme) === false) {
+		fail('README.md does not reference docs/preview*.svg — the plugin page would show no illustration')
+	}
 	for (const [detail, preview] of [
 		['docs/DETAIL.md', 'preview.svg'],
 		['docs/DETAIL.zh.md', 'preview.zh.svg']
