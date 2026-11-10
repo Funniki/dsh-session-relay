@@ -1,15 +1,8 @@
 # dsh-session-relay
 
-版本：**0.1.1**
-
 DeepSeek Harness（0.2.x）的**跨会话通信中继**：让同一进程里不同的会话（不是父子关系的子代理）互相发现、发消息、查回执、看进度、开平级新会话。
 
 ![会话之间直接对话](docs/preview.zh.svg)
-
-> 本插件原名为 `dsh-session-hub`（0.4.1 之前）。发布时改名，包名、bundle 行、模块 id、
-> **工具名（`hub_*` → `relay_*`）**全部换成 `relay`；状态目录从 `~/.dsh/session-hub/`
-> 自动读取一次并迁移到 `~/.dsh/session-relay/`，已有规则里的旧工具名也会自动改写，
-> 所以升级后不需要重新配置。旧会话里的中继卡片仍能识别（`SOURCE_LABELS` 保留旧值）。
 
 解决的痛点：worker 会话想通知「主控」、主控想盯多个 worker 的进度时，Harness 只提供「父会话 → 子代理」这一条路，于是只能写 `ALERT-*.md` 交接文件等对方巡检。
 
@@ -92,9 +85,6 @@ sh ./install.sh                                            # macOS / Linux
 脚本会自动判断这是本地目录还是已发布的包，装完检查「能不能从 profile 根解析」「有没有登记成 bundle」。
 `DSH_PROFILE=web` 可指定别的 profile，`DSH_VERSION` 可钉版本。
 
-> 从 `dsh-session-hub` 升级上来的话，**先卸载旧包再装新包**：
-> `dsh plugin --profile desktop remove dsh-session-hub`。两个包同时存在会重复注册工具。
-
 装完重启 DSH（或到插件页关掉再开一次 bundle）。插件没有第三方依赖，不需要 `pnpm install`。
 
 
@@ -109,3 +99,17 @@ sh ./install.sh                                            # macOS / Linux
 | `input` | 每次进入新步骤 | 把 `text` 作为一条上下文消息重申（`once: "turn"` 每回合一次 / `"session"` 每会话一次） |
 
 匹配条件：`tool`（工具名或 `*`）+ 可选 `match`（序列化后的调用参数子串）+ 可选 `resultMatch`（after 专用，结果子串）。
+
+## 从旧版本升级
+
+本插件原名为 `dsh-session-hub`。发布时改名，包名、bundle 行、模块 id、**工具名（`hub_*` → `relay_*`）**
+全部换成 `relay`；状态目录从 `~/.dsh/session-hub/` 自动读取一次并迁移到 `~/.dsh/session-relay/`，
+已有规则里的旧工具名会自动改写，所以升级后不需要重新配置。
+旧会话里的中继卡片仍能识别（`SOURCE_LABELS` 保留旧值）。
+
+升级时**先卸载旧包再装新包**：`dsh plugin --profile desktop remove dsh-session-hub`。
+两个包同时存在会重复注册工具。
+
+## 当前版本
+
+当前版本：**0.1.1**
