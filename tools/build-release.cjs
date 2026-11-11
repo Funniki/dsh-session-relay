@@ -255,6 +255,20 @@ function checkShowcase() {
 		if (fs.existsSync(path.join(PLUGIN, detail)) === false) fail(`locale/${dictionary} points meta.detail at ${detail}, which does not exist`)
 	}
 	// The illustration must be referenced from the document the page actually renders.
+	// npm resolves README images against the *repository* root while GitHub resolves them
+	// beside the README, and this package sits in plugin/. The root copies exist so the
+	// published page keeps working; they must not drift from the packaged originals.
+	for (const preview of ['preview.svg', 'preview.zh.svg']) {
+		const packaged = path.join(PLUGIN, 'docs', preview)
+		const mirrored = path.resolve(PLUGIN, '..', 'docs', preview)
+		if (fs.existsSync(mirrored) === false) {
+			fail(`docs/${preview} is missing at the repository root — npm resolves README images from there`)
+			continue
+		}
+		if (fs.readFileSync(packaged).equals(fs.readFileSync(mirrored)) === false) {
+			fail(`docs/${preview} differs from plugin/docs/${preview} — the published page would drift`)
+		}
+	}
 	for (const [detail, preview] of [
 		['docs/DETAIL.md', 'preview.svg'],
 		['docs/DETAIL.zh.md', 'preview.zh.svg']
