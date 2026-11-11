@@ -2,7 +2,7 @@
 
 DeepSeek Harness（0.2.x）的**跨会话通信中继**：让同一进程里不同的会话（不是父子关系的子代理）互相发现、发消息、查回执、看进度、开平级新会话。
 
-![会话之间直接对话](docs/preview.zh.svg)
+![会话之间直接对话](https://raw.githubusercontent.com/Funniki/dsh-session-relay/main/plugin/docs/preview.zh.svg)
 
 解决的痛点：worker 会话想通知「主控」、主控想盯多个 worker 的进度时，Harness 只提供「父会话 → 子代理」这一条路，于是只能写 `ALERT-*.md` 交接文件等对方巡检。
 
