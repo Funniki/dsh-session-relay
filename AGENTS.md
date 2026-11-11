@@ -39,6 +39,18 @@
 - **已发布工具名的兼容**：0.1.1 把工具从 `hub_*` 改成了 `relay_*`，落盘规则里的旧名由
   `migrateRuleTools()` 在读状态时改写。以后若再改名，必须保留同样的迁移，不能让护栏静默失效。
 
+## 切换安装形态（link ↔ npm）
+
+- **删 `link:` 依赖会连链接目标里的文件一起删。** 已经发生过一次：`dsh plugin remove` 之后
+  `session-hub/plugin/` 被整个清空（16 个文件），插件页当场报
+  `ENOENT … session-hub\plugin\locale`。
+- 删之前先确认开发目录已提交（`git status` 干净）；万一被删，`git restore plugin` 就能恢复。
+- 装回 registry 版时 pnpm 可能报 `Already up to date` 但目录实际缺失 —— 用
+  `dsh plugin --profile <名字> install --force` 强制拉一次，再用「版本 / 属性不是 ReparsePoint /
+  `locale/` 里有文件」三项确认真的装上了。
+- 桌面 profile 换成 registry 版之后，**开发目录的改动不再自动生效**：要本地联调就临时换回 link，
+  测完换回 registry，并重跑发布门槛。
+
 ## 插件页展示（实测结论，别再猜）
 
 - 插件页显示的正文**不是 README**，而是依次查找：`locale/<lang>.json` 里的 `meta.detail`
